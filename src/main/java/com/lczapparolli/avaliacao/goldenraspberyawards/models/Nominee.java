@@ -36,6 +36,31 @@ public class Nominee {
 
     //endregion
 
+    //region Construtores
+
+    /**
+     * Inicializa o objeto sem preencher as propriedades
+     */
+    public Nominee() { /* Empty */ }
+
+    /**
+     * Inicializa o objeto preenchendo as propriedades
+     * @param year Ano de lançamento do filme
+     * @param title Título do filme
+     * @param studios Lista de estúdios
+     * @param producers Lista de produtores
+     * @param winner Indicação se foi vencedor do prêmio
+     */
+    public Nominee(int year, String title, List<String> studios, List<String> producers, boolean winner) {
+        this.year = year;
+        this.title = title;
+        this.studios = studios;
+        this.producers = producers;
+        this.winner = winner;
+    }
+
+    //endregion
+
     //region Getters/Setters
 
     /**
