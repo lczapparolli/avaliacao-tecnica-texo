@@ -10,6 +10,12 @@ Para executar a aplicação é possível utilizar o servidor embutido, bastando 
 **Linux/MacOS:** ```./mvnw spring-boot:run```
 **Windows:** ```mvnw spring-boot:run```
 
+A aplicação será executada e um servidor estará ouvindo as requisições na porta 8080. Os seguintes endpoints estarão disponíveis:
+
+`GET /`: A raiz da aplicação irá identificar se a aplicação está funcionando corretamente ou se não foi possível carregar o arquivo de dados.
+
+`GET /reports/producers/byInterval`: O endpoint com a resposta para a avaliação, irá retornar os produtores com o maior e o menor intervalo entre as vitórias.
+
 Para executar os testes, o comando é similar, bastando executar:
 
 **Linux/MacOS:** ```./mvnw test```
