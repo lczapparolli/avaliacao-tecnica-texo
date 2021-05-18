@@ -15,7 +15,7 @@ import com.lczapparolli.avaliacao.goldenraspberyawards.models.Nominee;
 /**
  * Realiza a leitura da base de dados de indicações e vencedores da premiação
  */
-public class CSVDataReader {
+public class CSVDataReader implements IRepository {
 
     //region Campos
 
@@ -38,7 +38,7 @@ public class CSVDataReader {
      * @throws FileNotFoundException Exceção disparada quando não houver arquivo de dados
      * @throws IOException Exceção disparada quando houver algum erro na leitura dos dados
      */
-    public CSVDataReader() throws FileNotFoundException, IOException {
+    public CSVDataReader() throws IOException {
         // Retorna o arquivo referente ao recurso
         File dataFile = ResourceUtils.getFile(CSVDataReader.DATA_FILE);
         //Executa a leitura do arquivo
@@ -53,6 +53,7 @@ public class CSVDataReader {
      * Retorna a lista de indicações
      * @return Lista de indicações lida do arquivo de dados
      */
+    @Override
     public List<Nominee> getNomineeList() {
         return this.nomineeList;
     }
