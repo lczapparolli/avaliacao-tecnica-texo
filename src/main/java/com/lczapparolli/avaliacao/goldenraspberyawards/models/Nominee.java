@@ -2,12 +2,28 @@ package com.lczapparolli.avaliacao.goldenraspberyawards.models;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 /**
  * Contém os dados de uma indicação ao prêmio Golden Raspbery, identificando quando o filme foi ganhador do prêmio
  */
+@Entity
 public class Nominee {
 
     //region Campos
+
+    /**
+     * Identificador único da entidade
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     /**
      * Ano em que o filme foi lançado e concorreu ao prêmio
@@ -20,14 +36,24 @@ public class Nominee {
     private String title;
     
     /**
-     * Lista de nomes dos estúdios
+     * Lista de estúdios responsáveis pelo filme
      */
-    private List<String> studios;
+    @ManyToMany
+    @JoinTable(
+        name = "nominee_studio", 
+        joinColumns = @JoinColumn(name = "nominee_id"), 
+        inverseJoinColumns = @JoinColumn(name = "studio_id"))
+    private List<Studio> studios;
     
     /**
      * Lista de produtores do filme
      */
-    private List<String> producers;
+    @ManyToMany
+    @JoinTable(
+        name = "nominee_producer", 
+        joinColumns = @JoinColumn(name = "nominee_id"), 
+        inverseJoinColumns = @JoinColumn(name = "producer_id"))
+    private List<Producer> producers;
     
     /**
      * Indica se o filme foi vencedor no ano
@@ -44,14 +70,14 @@ public class Nominee {
     public Nominee() { /* Empty */ }
 
     /**
-     * Inicializa o objeto preenchendo as propriedades
+     * Inicializa o objeto preenchendo as propriedades, exceto o identificador único
      * @param year Ano de lançamento do filme
      * @param title Título do filme
      * @param studios Lista de estúdios
      * @param producers Lista de produtores
      * @param winner Indicação se foi vencedor do prêmio
      */
-    public Nominee(int year, String title, List<String> studios, List<String> producers, boolean winner) {
+    public Nominee(int year, String title, List<Studio> studios, List<Producer> producers, boolean winner) {
         this.year = year;
         this.title = title;
         this.studios = studios;
@@ -59,9 +85,44 @@ public class Nominee {
         this.winner = winner;
     }
 
+    /**
+     * Inicializa o objeto preenchendo todas as propriedades
+     * @param id Identificador único do registro
+     * @param year Ano de lançamento do filme
+     * @param title Título do filme
+     * @param studios Lista de estúdios
+     * @param producers Lista de produtores
+     * @param winner Indicação se foi vencedor do prêmio
+     */
+    public Nominee(Long id, int year, String title, List<Studio> studios, List<Producer> producers, boolean winner) {
+        this.id = id;
+        this.year = year;
+        this.title = title;
+        this.studios = studios;
+        this.producers = producers;
+        this.winner = winner;
+    }
+
+
     //endregion
 
     //region Getters/Setters
+
+    /**
+     * Retorna o identificador único do registro
+     * @return Valor atual do campo
+     */
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * Define o identificador único do registro
+     * @param id Novo valor do campo
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /**
      * Retorna o ano em que o filme foi lançado
@@ -99,7 +160,7 @@ public class Nominee {
      * Retorna a lista de estúdios do filme
      * @return Valor atual do campo
      */
-    public List<String> getStudios() {
+    public List<Studio> getStudios() {
         return this.studios;
     }
 
@@ -107,7 +168,7 @@ public class Nominee {
      * Define a lista de estúdios do filme
      * @param studios Novo valor do campo
      */
-    public void setStudios(List<String> studios) {
+    public void setStudios(List<Studio> studios) {
         this.studios = studios;
     }
 
@@ -115,7 +176,7 @@ public class Nominee {
      * Retorna a lista de produtores do filme
      * @return Valor atual do campo
      */
-    public List<String> getProducers() {
+    public List<Producer> getProducers() {
         return this.producers;
     }
 
@@ -123,7 +184,7 @@ public class Nominee {
      * Defina a lista de produtores do filme
      * @param producers Novo valor do campo
      */
-    public void setProducers(List<String> producers) {
+    public void setProducers(List<Producer> producers) {
         this.producers = producers;
     }
 
