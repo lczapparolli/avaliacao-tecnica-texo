@@ -1,11 +1,24 @@
 package com.lczapparolli.avaliacao.goldenraspberyawards.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Modelo representando o intervalo entre duas vitórios de um produtor
  */
+@Entity
 public class ProducerInterval {
 
     //region Campos
+
+    /**
+     * Identificador único
+     */
+    @Id
+    @JsonIgnore
+    private Long id;
 
     /**
      * Nome do produtor
@@ -37,7 +50,7 @@ public class ProducerInterval {
     public ProducerInterval() { /* Empty */ }
 
     /**
-     * Inicizaliza o objeto preenchendo as propriedades
+     * Inicializa o objeto preenchendo as propriedades, exceto o identificador único
      * @param producer Nome do produtor
      * @param interval Intervalo em anos entre as vitórias
      * @param previousWin Ano da vitória anterior
@@ -50,10 +63,42 @@ public class ProducerInterval {
         this.followingWin = followingWin;
     }
 
+    /**
+     * Inicializa o objeto preenchendo todas as propriedades
+     * @param id Identificador único do produtor
+     * @param producer Nome do produtor
+     * @param interval Intervalo em anos entre as vitórias
+     * @param previousWin Ano da vitória anterior
+     * @param followingWin Ano da vitória seguinte
+     */
+    public ProducerInterval(Long id, String producer, int interval, int previousWin, int followingWin) {
+        this.id = id;
+        this.producer = producer;
+        this.interval = interval;
+        this.previousWin = previousWin;
+        this.followingWin = followingWin;
+    }
+
     //endregion
 
     //region Getters/Setters
 
+    /**
+     * Retorna o identificador único do produtor
+     * @return Valor atual
+     */
+    public Long getId() {
+        return this.id;
+    }
+
+    /**
+     * Define o identificador único do produtor
+     * @param id Novo valor
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     /**
      * Retorna o nome do produtor
      * @return Valor atual
