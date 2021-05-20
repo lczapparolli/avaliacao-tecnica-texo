@@ -164,5 +164,33 @@ public class ProducerInterval {
     }
 
     //endregion
+
+    //region Métodos sobrescritos
+    
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append("ProducerInterval(")
+            .append("id:").append(id)
+            .append(",producer:").append(producer)
+            .append(",interval:").append(interval)
+            .append(",previousWin:").append(previousWin)
+            .append(",followingWin:").append(followingWin)
+            .append(")")
+            .toString();
+    }
+
+    @Override
+    public boolean equals(Object producerInterval) {
+        if (this == producerInterval) return true;
+        if (producerInterval == null) return false;
+        if (!(producerInterval instanceof ProducerInterval)) return false;
+        return this.id == ((ProducerInterval) producerInterval).id &&
+            this.interval == ((ProducerInterval) producerInterval).interval &&
+            this.previousWin == ((ProducerInterval) producerInterval).previousWin &&
+            this.followingWin == ((ProducerInterval) producerInterval).followingWin;
+    }
+
+    //endregion
     
 }

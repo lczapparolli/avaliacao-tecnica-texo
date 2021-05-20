@@ -89,4 +89,26 @@ public class Producer {
     }
 
     //enderegion
+
+    //region Métodos sobrescritos
+    
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append("Producer(")
+            .append("id:").append(id)
+            .append(",name:").append(name)
+            .append(")")
+            .toString();
+    }
+
+    @Override
+    public boolean equals(Object producer) {
+        if (this == producer) return true;
+        if (producer == null) return false;
+        if (!(producer instanceof Producer)) return false;
+        return this.id == ((Producer) producer).id;
+    }
+
+    //endregion
 }

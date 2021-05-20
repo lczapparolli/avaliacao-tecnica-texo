@@ -76,4 +76,27 @@ public class ProducersByIntervalReport {
 
     //endregion
 
+    //region Métodos sobrescritos
+    
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append("ProducersByIntervalReport(")
+            .append("min:").append(min)
+            .append(",max:").append(max)
+            .append(")")
+            .toString();
+    }
+
+    @Override
+    public boolean equals(Object producersByIntervalReport) {
+        if (this == producersByIntervalReport) return true;
+        if (producersByIntervalReport == null) return false;
+        if (!(producersByIntervalReport instanceof ProducersByIntervalReport)) return false;
+        return this.min == ((ProducersByIntervalReport) producersByIntervalReport).min && 
+            this.max == ((ProducersByIntervalReport) producersByIntervalReport).max;
+    }
+
+    //endregion
+
 }

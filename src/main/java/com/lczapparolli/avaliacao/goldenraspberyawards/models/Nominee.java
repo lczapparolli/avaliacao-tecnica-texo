@@ -206,4 +206,30 @@ public class Nominee {
 
     //endregion
 
+    //region Métodos sobrescritos
+    
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append("Nominee(")
+            .append("id:").append(id)
+            .append(",year:").append(year)
+            .append(",title:").append(title)
+            .append(",winner:").append(winner)
+            .append(",studios:").append(studios)
+            .append(",producers:").append(producers)
+            .append(")")
+            .toString();
+    }
+
+    @Override
+    public boolean equals(Object nominee) {
+        if (this == nominee) return true;
+        if (nominee == null) return false;
+        if (!(nominee instanceof Nominee)) return false;
+        return this.id == ((Nominee) nominee).id;
+    }
+
+    //endregion
+
 }

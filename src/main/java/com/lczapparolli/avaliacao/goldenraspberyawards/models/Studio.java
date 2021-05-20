@@ -90,4 +90,26 @@ public class Studio {
 
     //endregion
 
+    //region Métodos sobrescritos
+    
+    @Override
+    public String toString() {
+        return new StringBuilder()
+            .append("ProducerInterval(")
+            .append("id:").append(id)
+            .append(",name:").append(name)
+            .append(")")
+            .toString();
+    }
+
+    @Override
+    public boolean equals(Object studio) {
+        if (this == studio) return true;
+        if (studio == null) return false;
+        if (!(studio instanceof Studio)) return false;
+        return this.id == ((Studio) studio).id;
+    }
+
+    //endregion
+
 }
