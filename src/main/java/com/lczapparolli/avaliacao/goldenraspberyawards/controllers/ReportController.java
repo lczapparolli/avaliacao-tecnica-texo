@@ -6,22 +6,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import com.lczapparolli.avaliacao.goldenraspberyawards.data.NomineeRepository;
 import com.lczapparolli.avaliacao.goldenraspberyawards.models.Nominee;
+import com.lczapparolli.avaliacao.goldenraspberyawards.models.Producer;
 import com.lczapparolli.avaliacao.goldenraspberyawards.models.ProducerInterval;
 import com.lczapparolli.avaliacao.goldenraspberyawards.models.ProducersByIntervalReport;
-import com.lczapparolli.avaliacao.goldenraspberyawards.data.IRepository;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller responsável por retornar os dados dos relatórios da aplicação
  */
+@RestController
 public class ReportController {
     
     //region Campos
 
     /**
-     * Repositório contendo os dados
+     * Repositório de indicações
      */
-    private IRepository repository;
+    private NomineeRepository nomineeRepository;
 
     //endregion
 
@@ -29,20 +34,21 @@ public class ReportController {
 
     /**
      * Inicializa o controller do relatório
-     * @param repository Repositório contendo os dados
+     * @param nomineeRepository Repositório de indicações
      */
-    public ReportController(IRepository repository) {
-        this.repository = repository;
+    public ReportController(NomineeRepository nomineeRepository) {
+        this.nomineeRepository = nomineeRepository;
     }
 
     //endregion
 
-    //region Métodos publicos
+    //region Métodos HTTP
 
     /**
      * Retorna o relatório com os produtores que possuem o maior e o menor intervalo entre duas vitórias
      * @return Dados do relatório
      */
+    @GetMapping("/reports/producers/byInterval")
     public ProducersByIntervalReport getProducersByInterval() {
         //Obtém a lista de produtores com os anos em que venceu o prêmio
         Map<String, List<Integer>> producersWins = this.getProducersWins();
@@ -107,21 +113,18 @@ public class ReportController {
         //Inicializa a lista de dados
         Map<String, List<Integer>> producersWins = new HashMap<>();
         //Percorre a lista com todas as indicações
-        for (Nominee nominee : repository.getNomineeList()) {
-            //Caso a indicação seja a vitoriosa
-            if (nominee.getWinner()) {
-                //Percorre a lista de produtores do filme
-                for (String producer : nominee.getProducers()) {
-                    //Obtém a lista de vitórias do produtor
-                    List<Integer> wins = producersWins.get(producer);
-                    //Caso a lista ainda não tenha sido inicializada, cria uma nova lista e adiciona no Map
-                    if (wins == null) {
-                        wins = new ArrayList<>();
-                        producersWins.put(producer, wins);
-                    }
-                    //Adiciona o ano da vitória na lista do produtor
-                    wins.add(nominee.getYear());
+        for (Nominee nominee : nomineeRepository.findAllByWinner(true)) {
+            //Percorre a lista de produtores do filme
+            for (Producer producer : nominee.getProducers()) {
+                //Obtém a lista de vitórias do produtor
+                List<Integer> wins = producersWins.get(producer.getName());
+                //Caso a lista ainda não tenha sido inicializada, cria uma nova lista e adiciona no Map
+                if (wins == null) {
+                    wins = new ArrayList<>();
+                    producersWins.put(producer.getName(), wins);
                 }
+                //Adiciona o ano da vitória na lista do produtor
+                wins.add(nominee.getYear());
             }
         }
         //Retorna os dados preenchidos

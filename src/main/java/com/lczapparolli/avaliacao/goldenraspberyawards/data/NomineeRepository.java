@@ -1,5 +1,7 @@
 package com.lczapparolli.avaliacao.goldenraspberyawards.data;
 
+import java.util.List;
+
 import com.lczapparolli.avaliacao.goldenraspberyawards.models.Nominee;
 
 import org.springframework.data.repository.CrudRepository;
@@ -9,4 +11,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface NomineeRepository extends CrudRepository<Nominee, Long> {
     
+    List<Nominee> findAllByWinner(boolean winner);
+
 }
